@@ -1,78 +1,75 @@
+package StacksAndQueues;
+
+import SinglyLinkedList.SinglyLinkedList;
+
 import java.util.NoSuchElementException;
 
 /**
- * Your implementation of an array-backed queue.
+ * Your implementation of an array-backed stack.
  *
  * @author Lorin Achey
  * @version 1.0
  */
-public class ArrayQueue<T> implements QueueInterface<T> {
+public class ArrayStack<T> implements StackInterface<T> {
 
     // Do not add new instance variables.
     private T[] backingArray;
-
-    // {@code front} is the index you will dequeue from
-    private int front;
-    // {@code back} is the index you will enqueue into
-    private int back;
     private int size;
 
-
     /**
-     * Constructs a new ArrayQueue.
+     * Constructs a new StacksAndQueues.ArrayStack.
      */
-    public ArrayQueue() {
+    public ArrayStack() {
         backingArray = (T[]) new Object[INITIAL_CAPACITY];
     }
 
+    @Override
+    public boolean isEmpty() {
+        return (size == 0);
+    }
+
     /**
-     * Dequeue from the front of the queue.
+     * Pop from the stack.
      *
      * Do not shrink the backing array.
-     * If the queue becomes empty as a result of this call, you must not
-     * explicitly reset front or back to 0.
      *
-     * @see QueueInterface#dequeue()
+     * @see SinglyLinkedList.StackInterface#pop()
      */
     @Override
-    public T dequeue() {
+    public T pop() {
         if (size == 0) {
-            throw new NoSuchElementException("The Queue is empty.");
+            throw new NoSuchElementException("The stack is empty.");
         } else {
-            T answer = backingArray[front];
-            backingArray[front] = null;
-            front = (front + 1) % backingArray.length;
+            T answer = backingArray[size - 1];
+            backingArray[size - 1] = null;
             size--;
             return answer;
         }
     }
 
     /**
-     * Add the given data to the back of the queue.
+     * Push the given data onto the stack.
      *
      * If sufficient space is not available in the backing array, you should
      * regrow it to (double the current length) + 1; in essence, 2n + 1, where n
-     * is the current capacity. If a regrow is necessary, you should copy
-     * elements to the beginning of the new array and reset back to 0.
+     * is the current capacity.
      *
-     * @see QueueInterface#enqueue(T)
+     * @see SinglyLinkedList.StackInterface#push(T)
      */
     @Override
-    public void enqueue(T data) {
+    public void push(T data) {
         if (data == null) {
-            throw new IllegalArgumentException("Cannot add null data.");
+            throw new IllegalArgumentException("Cannot add null"
+                    + "data to the stack.");
         }
         if (size == backingArray.length) {
             backingArray = regrowArray(backingArray);
             backingArray[size] = data;
-            back = size + 1;
             size++;
         } else {
-            backingArray[back] = data;
-            back = (back + 1) % backingArray.length;
+            backingArray[size] = data;
             size++;
         }
-
     }
 
     /**
@@ -85,13 +82,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
         for (int i = 0; i < arr.length; i++) {
             regrownArray[i] = arr[i];
         }
-        front = 0;
         return regrownArray;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return (size == 0);
     }
 
     @Override
@@ -100,7 +91,7 @@ public class ArrayQueue<T> implements QueueInterface<T> {
     }
 
     /**
-     * Returns the backing array of this queue.
+     * Returns the backing array of this stack.
      * Normally, you would not do this, but we need it for grading your work.
      *
      * DO NOT USE THIS METHOD IN YOUR CODE.
@@ -112,3 +103,4 @@ public class ArrayQueue<T> implements QueueInterface<T> {
         return backingArray;
     }
 }
+

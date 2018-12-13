@@ -1,3 +1,5 @@
+package StacksAndQueues;
+
 /**
  * Node class used in linked data structure implementations.
  *
@@ -12,7 +14,7 @@ public class LinkedNode<T> {
     private LinkedNode<T> next;
 
     /**
-     * Create a new LinkedNode with the given data object and next node.
+     * Create a new StacksAndQueues.LinkedNode with the given data object and next node.
      *
      * @param data data to store in the node
      * @param next the next node
@@ -23,7 +25,7 @@ public class LinkedNode<T> {
     }
 
     /**
-     * Create a new LinkedNode with the given data object and no next node.
+     * Create a new StacksAndQueues.LinkedNode with the given data object and no next node.
      *
      * @param data data to store in this node
      */

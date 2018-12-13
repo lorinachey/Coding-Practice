@@ -1,3 +1,5 @@
+package StacksAndQueues;
+
 /**
  * Interface detailing the methods required for implementing a queue.
  *
@@ -14,7 +16,7 @@ public interface QueueInterface<T> {
     public static final int INITIAL_CAPACITY = 11;
 
     /**
-     * Dequeue from the queue. For ArrayQueue, this
+     * Dequeue from the queue. For StacksAndQueues.ArrayQueue, this
      * should be done from the {@code front} variable.
      *
      * This method should be implemented in O(1) time.
@@ -25,7 +27,7 @@ public interface QueueInterface<T> {
     T dequeue();
 
     /**
-     * Add the given data to the queue. For ArrayQueue,
+     * Add the given data to the queue. For StacksAndQueues.ArrayQueue,
      * this should be done to the {@code back} variable.
      *
      * This method should be implemented in (if array-backed, amortized) O(1)

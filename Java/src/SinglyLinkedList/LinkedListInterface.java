@@ -1,5 +1,7 @@
+package SinglyLinkedList;
+
 /**
- * This interface describes the public methods needed for SinglyLinkedList,
+ * This interface describes the public methods needed for SinglyLinkedList.SinglyLinkedList,
  * which should be singly-linked and should have both a head and a tail pointer.
  *
  * The expected Big-O for each method has been given to you.

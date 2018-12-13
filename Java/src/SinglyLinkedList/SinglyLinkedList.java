@@ -1,13 +1,14 @@
+package SinglyLinkedList;
+
 import java.util.NoSuchElementException;
 
 /**
- * Your implementation of a SinglyLinkedList
+ * Your implementation of a SinglyLinkedList.SinglyLinkedList
  *
  * @author Lorin Achey
  * @version 1.0
  */
-public class SinglyLinkedList<T extends Comparable<? super T>> implements
-        LinkedListInterface<T> {
+public class SinglyLinkedList<T extends Comparable<? super T>> implements LinkedListInterface<T> {
     // Do not add new instance variables.
     private SLLNode<T> head;
     private SLLNode<T> tail;

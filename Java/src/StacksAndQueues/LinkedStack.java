@@ -1,3 +1,7 @@
+package StacksAndQueues;
+
+import SinglyLinkedList.SinglyLinkedList;
+
 import java.util.NoSuchElementException;
 
 /**
@@ -6,7 +10,7 @@ import java.util.NoSuchElementException;
  * @author Lorin Achey
  * @version 1.0
  */
-public class LinkedStack<T> implements StackInterface<T> {
+public class LinkedStack<T> implements SinglyLinkedList.StackInterface<T> {
 
     // Do not add new instance variables.
     private LinkedNode<T> head;

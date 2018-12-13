@@ -1,3 +1,5 @@
+package SinglyLinkedList;
+
 /**
  * Node class used for implementing your SinglyLinkedList.
  *
@@ -11,7 +13,7 @@ public class SLLNode<T extends Comparable<? super T>> {
     private SLLNode<T> next;
 
     /**
-     * Creates a new SLLNode with the given T object and node reference.
+     * Creates a new SinglyLinkedList.SLLNode with the given T object and node reference.
      *
      * @param data The data stored in the new node.
      * @param next The next node in the list.
@@ -22,7 +24,7 @@ public class SLLNode<T extends Comparable<? super T>> {
     }
 
     /**
-     * Creates a new SLLNode with only the given T object.
+     * Creates a new SinglyLinkedList.SLLNode with only the given T object.
      *
      * @param data The data stored in the new node.
      */

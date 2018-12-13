@@ -1,3 +1,5 @@
+package StacksAndQueues;
+
 /**
  * Interface detailing the methods required for implementing a stack.
  *

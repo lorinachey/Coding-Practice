@@ -1,3 +1,5 @@
+package StacksAndQueues;
+
 import java.util.NoSuchElementException;
 
 /**
