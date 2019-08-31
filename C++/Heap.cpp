@@ -1,5 +1,16 @@
+<<<<<<< Updated upstream
 // Heap.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
+=======
+/* Heap.cpp : This file contains the 'main' function. Program execution begins and ends there.
+
+This file is about practicing setting up classes and inheritance structures in cpp. Implementing
+a min and max heap that inherit from a base heap class helps with practicing object oriented
+principles in C++ and serves as good practice for implementing data structures like trees.
+
+Author: Lorin Achey
+*/
+>>>>>>> Stashed changes
 
 #include <iostream>
 #include <vector>
@@ -10,6 +21,10 @@ public:
 	int size = 0;
 	std::vector<int> heapVector;
 
+<<<<<<< Updated upstream
+=======
+	//TODO: Understand virtual keyword as it pertains to inheritance in MinHeap and MaxHeap classes
+>>>>>>> Stashed changes
 	//virtual void heapify();
 	void printHeap(std::vector<int> heapVector);
 };
@@ -68,7 +83,11 @@ int main()
 	MinHeap* minHeap = new MinHeap(heapVector, size);
 	minHeap->heapify(minHeap->heapVector, minHeap->size, minHeap->heapVector[0]);
 	minHeap->printHeap(heapVector);
+<<<<<<< Updated upstream
 
     std::cout << "Hello World!\n";
+=======
+	
+>>>>>>> Stashed changes
 	getchar();
 }
