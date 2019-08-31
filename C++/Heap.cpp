@@ -13,12 +13,19 @@ Author: Lorin Achey
 class Heap
 {
 public:
+    //TODO: what's the OOP best practice on variable declarations for parent and child classes?
     int size = 0;
     std::vector<int> heapVector;
+    
+    // Defined as pure virtual because MinHeap will need a different heapify
+    // than MaxHeap and Min or Max must be specified to build the heap.
+    virtual void heapify(std::vector<int> &heapVector, int size, int p) = 0;
 
-    //TODO: Understand virtual keyword as it pertains to inheritance in MinHeap and MaxHeap classes
-    //virtual void heapify();
+    void buildHeap(std::vector<int> &heapVector);
+    
     void printHeap(std::vector<int> heapVector);
+
+    virtual ~Heap() {}
 };
 
 class MaxHeap : public Heap
@@ -29,7 +36,7 @@ public:
 
     MaxHeap(std::vector<int> heapVector, int size) : heapVector(heapVector), size(size) {}
 
-    void heapify(std::vector<int> heapVector, int size, int p);
+    void heapify(std::vector<int> &heapVector, int size, int p);
 
     int removeMax(std::vector<int> heapVector);
 };
@@ -42,39 +49,94 @@ public:
 
     MinHeap(std::vector<int> heapVector, int size) : heapVector(heapVector), size(size) {}
 
-    void heapify(std::vector<int> heapVector, int size, int p);
+    void heapify(std::vector<int> &heapVector, int size, int p);
 
     int removeMin(std::vector<int> heapVector);
 };
 
-void MinHeap::heapify(std::vector<int> heapVector, int size, int p)
+void MinHeap::heapify(std::vector<int> &heapVector, int size, int p)
 {
+    int smallest = p;
+    int left = 2 * p + 1;
+    int right = left + 1;
+
+    if (left < size && heapVector[left] < heapVector[smallest])
+    {
+        smallest = left;
+    }
+
+    if (right < size && heapVector[right] < heapVector[smallest])
+    {
+        smallest = right;
+    }
+
+    if (smallest != p)
+    {
+        std::swap(heapVector[p], heapVector[smallest]);
+        heapify(heapVector, heapVector.size(), smallest);
+    }
+}
+
+void MaxHeap::heapify(std::vector<int> &heapVector, int size, int p)
+{
+    int largest = p;
+    int left = 2 * p + 1;
+    int right = left + 1;
+
+    if (left < size && heapVector[left] > heapVector[largest])
+    {
+        largest = left;
+    }
+
+    if (right < size && heapVector[right] > heapVector[largest])
+    {
+        largest = right;
+    }
+
+    if (largest != p)
+    {
+        std::swap(heapVector[p], heapVector[largest]);
+        heapify(heapVector, heapVector.size(), largest);
+    }
 
 }
 
-void MaxHeap::heapify(std::vector<int> heapVector, int size, int p)
+void Heap::buildHeap(std::vector<int> &heapVector)
 {
+    int startNode = (heapVector.size() / 2) - 1;
 
+    for (int i = startNode; i >= 0; i--)
+    {
+        heapify(heapVector, heapVector.size(), i);
+    }
 }
 
 void Heap::printHeap(std::vector<int> heapVector)
 {
-    std::cout << "Heap in Array Representation: ";
-
     for (auto i : heapVector)
     {
         std::cout << i << " ";
     }
+    std::cout << "\n";
 }
 
 int main()
 {
-    std::vector<int> heapVector = {1, 3, 0, 5, 7, 8};
+    std::vector<int> heapVector = {100, 30, 20, 10};
     int size = heapVector.size();
 
+    MaxHeap* maxHeap = new MaxHeap(heapVector, size);
+    maxHeap->buildHeap(maxHeap->heapVector);
+
+    std::cout << "\nBuilding Max Heap: ";
+    maxHeap->printHeap(maxHeap->heapVector);
+
+    std::cout << "\nBuilding Min Heap: ";
     MinHeap* minHeap = new MinHeap(heapVector, size);
-    minHeap->heapify(minHeap->heapVector, minHeap->size, minHeap->heapVector[0]);
-    minHeap->printHeap(heapVector);
+    minHeap->buildHeap(minHeap->heapVector);
+    minHeap->printHeap(minHeap->heapVector);
     
+    delete maxHeap;
+    delete minHeap;
     getchar();
 }
