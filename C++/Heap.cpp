@@ -25,6 +25,8 @@ public:
     
     void printHeap(std::vector<int> heapVector);
 
+    virtual void overridePractice();
+
     virtual ~Heap() {}
 };
 
@@ -38,6 +40,7 @@ public:
 
     void heapify(std::vector<int> &heapVector, int size, int p);
 
+    //TODO: implement remove Max and add bounds checks to it
     int removeMax(std::vector<int> heapVector);
 };
 
@@ -51,7 +54,9 @@ public:
 
     void heapify(std::vector<int> &heapVector, int size, int p);
 
-    int removeMin(std::vector<int> heapVector);
+    int removeMin(std::vector<int> &heapVector);
+
+    void overridePractice();
 };
 
 void MinHeap::heapify(std::vector<int> &heapVector, int size, int p)
@@ -75,6 +80,25 @@ void MinHeap::heapify(std::vector<int> &heapVector, int size, int p)
         std::swap(heapVector[p], heapVector[smallest]);
         heapify(heapVector, heapVector.size(), smallest);
     }
+}
+
+int MinHeap::removeMin(std::vector<int> &heapVector)
+{
+    //TODO: Add bounds checks and error checking!
+
+    int returnVal = heapVector[0];
+
+    heapVector[0] = heapVector.back();
+    heapVector.pop_back();
+
+    heapify(heapVector, heapVector.size(), 0);
+
+    return returnVal;
+}
+
+void MinHeap::overridePractice()
+{
+    std::cout << "Override from MinHeap Class";
 }
 
 void MaxHeap::heapify(std::vector<int> &heapVector, int size, int p)
@@ -120,6 +144,11 @@ void Heap::printHeap(std::vector<int> heapVector)
     std::cout << "\n";
 }
 
+void Heap::overridePractice()
+{
+    std::cout << "Override in Heap Class";
+}
+
 int main()
 {
     std::vector<int> heapVector = {100, 30, 20, 10};
@@ -134,6 +163,9 @@ int main()
     std::cout << "\nBuilding Min Heap: ";
     MinHeap* minHeap = new MinHeap(heapVector, size);
     minHeap->buildHeap(minHeap->heapVector);
+    minHeap->printHeap(minHeap->heapVector);
+
+    minHeap->removeMin(minHeap->heapVector);
     minHeap->printHeap(minHeap->heapVector);
     
     delete maxHeap;
