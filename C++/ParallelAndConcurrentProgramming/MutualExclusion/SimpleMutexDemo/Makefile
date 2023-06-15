@@ -2,7 +2,7 @@
 CXX       = g++
 CXXFLAGS  = -Wall -std=c++20
 TARGET    = mutual_exclusion_demo
-SRC       = mutual_exclusino_demo.cpp
+SRC       = mutual_exclusion_demo.cpp
 
 $(TARGET): $(SRC)
 	$(CXX) $(CXXFLAGS) $(SRC) -o $(TARGET)
