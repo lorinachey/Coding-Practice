@@ -5,6 +5,8 @@
  * 
  * This version has been modified by Lorin Achey.
  * 
+ * This file contains a class called "container" which is a simple wrapper
+ * class that will be used to demonstrate the use of different constructors.
 */
 #include <format>
 #include <string>
@@ -25,12 +27,17 @@ class container {
 public:
     container() { print("Default constructor\n"); }
     container(std::initializer_list<T> initial_list);
-    container(const containers& rhs);
+    container(const container& rhs);  // Original copy constructor
+
+    // Move constructor - && makes this the rvalue reference. We need the noexcept to prevent
+    // the rvalue from being in an unusable state
+    container(container&& rhs) noexcept;
+
     ~container();
     void reset();
     container<T>& operator = (const container& rhs);
     string str() const;
-}
+};
 
 // Initializer list constructor
 template<typename T>
@@ -42,6 +49,12 @@ container<T>::container(std::initializer_list<T> initial_list) : contained_items
 template<typename T>
 container<T>::container(const container& rhs) : contained_items {rhs.contained_items} {
     print("Copy constructor\n");
+}
+
+// Move constructor
+template<typename T>
+container<T>::container(container&& rhs) noexcept : contained_items {std::move(rhs.contained_items)} {
+    print("Move constructor\n");
 }
 
 // Copy assignment operator
@@ -89,7 +102,7 @@ int main() {
     print("a: {}\n", a.str());
     print("b: {}\n", b.str());
 
-    container c(a);
+    container c(std::move(a));
     print("a: {}\n", a.str());
     print("c: {}\n", c.str());
 }
