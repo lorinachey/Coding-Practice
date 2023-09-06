@@ -24,7 +24,7 @@ constexpr void print(const std::string_view str_fmt, auto&&... args) {
 template<typename T>
 class container {
     std::vector<T> contained_items {};
-public:
+ public:
     container() { print("Default constructor\n"); }
     container(std::initializer_list<T> initial_list);
     container(const container& rhs);  // Original copy constructor
@@ -33,14 +33,17 @@ public:
     // the rvalue from being in an unusable state
     container(container&& rhs) noexcept;
 
-
     ~container();
     void reset();
 
     // Copy assignment operator
-    container<T>& operator = (const container& rhs);
+    // container<T>& operator = (const container& rhs);
     // Move assignment operator
-    container<T>& operator = (container&& rhs) noexcept;
+    // container<T>& operator = (container&& rhs) noexcept;
+
+    // Copy/swap - this reduces the copy and move assignment operators to one
+    // more efficient solution
+    container<T>& operator = (container rhs);
 
     string str() const;
 };
@@ -64,8 +67,9 @@ container<T>::container(container&& rhs) noexcept : contained_items {std::move(r
 }
 
 // Copy assignment operator
+/**
 template<typename T>
-container<T>& container<T>::operator= (const container& rhs) {
+container<T>& container<T>::operator = (const container& rhs) {
     print("Copy assignment operator\n");
     if (this != &rhs) {
         contained_items = rhs.contained_items;
@@ -75,11 +79,23 @@ container<T>& container<T>::operator= (const container& rhs) {
 
 // Move assignment operator
 template<typename T>
-container<T>& container<T>::operator= (container&& rhs) noexcept {
+container<T>& container<T>::operator = (container&& rhs) noexcept {
     print("Move assignment operator\n");
     if (this != &rhs) {
         contained_items = std::move(rhs.contained_items);
     }
+    return *this;
+}
+*/
+
+/** Copy/swap operator
+ * A pass-by-value copy is more efficient than a copy that creates a temporary object.
+ * It also does double-duty as a move operator.
+*/
+template<typename T>
+container<T>& container<T>::operator = (container rhs) {
+    print("Copy/swap operator\n");
+    std::swap(contained_items, rhs.contained_items);
     return *this;
 }
 
@@ -122,15 +138,20 @@ int main() {
     container c(std::move(a));
 
     // Calls the copy assignment operator
-    container<string> d {};
-    d = c;
+    // container<string> d {};
+    // d = c;
 
     // Calls the move assignment operator
-    container<string> e {};
-    e = std::move(d);
+    // container<string> e {};
+    // e = std::move(d);
+
+    // The copy and move assignment operators are replaced by copy/swap
+    c = b;
 
     print("a: {}\n", a.str());
     print("c: {}\n", c.str());
-    print("d: {}\n", d.str());
-    print("e: {}\n", e.str());
+
+    // Uncomment to see the copy and move assignment operator results
+    // print("d: {}\n", d.str());
+    // print("e: {}\n", e.str());
 }
