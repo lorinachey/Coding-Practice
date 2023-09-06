@@ -33,9 +33,15 @@ public:
     // the rvalue from being in an unusable state
     container(container&& rhs) noexcept;
 
+
     ~container();
     void reset();
+
+    // Copy assignment operator
     container<T>& operator = (const container& rhs);
+    // Move assignment operator
+    container<T>& operator = (container&& rhs) noexcept;
+
     string str() const;
 };
 
@@ -63,6 +69,16 @@ container<T>& container<T>::operator= (const container& rhs) {
     print("Copy assignment operator\n");
     if (this != &rhs) {
         contained_items = rhs.contained_items;
+    }
+    return *this;
+}
+
+// Move assignment operator
+template<typename T>
+container<T>& container<T>::operator= (container&& rhs) noexcept {
+    print("Move assignment operator\n");
+    if (this != &rhs) {
+        contained_items = std::move(rhs.contained_items);
     }
     return *this;
 }
@@ -102,7 +118,19 @@ int main() {
     print("a: {}\n", a.str());
     print("b: {}\n", b.str());
 
+    // Calls the move constructor
     container c(std::move(a));
+
+    // Calls the copy assignment operator
+    container<string> d {};
+    d = c;
+
+    // Calls the move assignment operator
+    container<string> e {};
+    e = std::move(d);
+
     print("a: {}\n", a.str());
     print("c: {}\n", c.str());
+    print("d: {}\n", d.str());
+    print("e: {}\n", e.str());
 }
