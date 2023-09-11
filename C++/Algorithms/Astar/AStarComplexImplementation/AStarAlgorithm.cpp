@@ -1,6 +1,7 @@
 #include "MinHeap.hpp"
 #include "Node.hpp"
 
+#include <assert.h>
 #include <vector>
 
 int calculateManhattanDistance(Node* currentNode, Node* endNode);
@@ -114,6 +115,32 @@ vector<vector<int>> reconstructPath(Node* endNode) {
     return path;
 }
 
+class RunTest {
+ public:
+  void run() {
+      auto startRow = 0;
+      auto startCol = 1;
+      auto endRow = 4;
+      auto endCol = 3;
+      vector<vector<int>> graph = {
+        {0, 0, 0, 0, 0},
+        {0, 1, 1, 1, 0},
+        {0, 0, 0, 0, 0},
+        {1, 0, 1, 1, 1},
+        {0, 0, 0, 0, 0},
+      };
+      vector<vector<int>> expected = {
+        {0, 1}, {0, 0}, {1, 0}, {2, 0}, {2, 1}, {3, 1}, {4, 1}, {4, 2}, {4, 3}};
+      auto actual = aStarAlgorithm(startRow, startCol, endRow, endCol, graph);
+      bool result = (expected == actual);
+      printf("\nTest Case PASS: %d\n", result);
+      assert(result);
+  }
+};
+
 int main() {
-    printf("TODO - add test cases here.");
+    // TODO   1. More test cases needed.
+    //        2. Rework the way we run tests to include test titles for cases covered.
+    RunTest test;
+    test.run();
 }
