@@ -1,6 +1,6 @@
 # Compiler and flags
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall
+CXXFLAGS = -Wall -std=c++17
 
 # Source files
 SOURCES = MinHeap.cpp AStarAlgorithm.cpp
